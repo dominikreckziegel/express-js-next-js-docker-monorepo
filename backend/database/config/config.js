@@ -1,28 +1,39 @@
-const { config } = require('dotenv');
+// Lädt Umgebungsvariablen aus der .env-Datei
+require('dotenv').config();
 
-config();
-
+// Exportiert die Konfiguration für Sequelize
 module.exports = {
   development: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    host: process.env.DB_HOST,
-    dialect: 'postgres',
-  },
-  production: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    host: process.env.DB_HOST,
-    dialect: 'postgres',
+    dialect: process.env.DB_DIALECT || 'postgres',
+    host: process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DB_PORT, 10) || 5432,
+    database: process.env.DB_DATABASE || 'animal_network',
+    username: process.env.DB_USER || 'animal_network_admin',
+    password: process.env.DB_PASSWORD || 'Skeileit30kam!!',
+    logging: console.log, // Optional: Logs SQL-Statements in der Entwicklung
   },
   test: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    host: process.env.DB_HOST,
-    dialect: 'postgres',
-    port: process.env.DB_PORT || 5432,
+    dialect: process.env.DB_DIALECT || 'postgres',
+    host: process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DB_PORT, 10) || 5432,
+    database: process.env.DB_TEST_DATABASE || 'animal_network_test', // Separate Test-Datenbank
+    username: process.env.DB_USER || 'animal_network_admin',
+    password: process.env.DB_PASSWORD || 'Skeileit30kam!!',
+    logging: false, // Keine SQL-Logs während Tests
+  },
+  production: {
+    dialect: process.env.DB_DIALECT || 'postgres',
+    host: process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DB_PORT, 10) || 5432,
+    database: process.env.DB_DATABASE || 'animal_network',
+    username: process.env.DB_USER || 'animal_network_admin',
+    password: process.env.DB_PASSWORD || 'Skeileit30kam!!',
+    logging: false, // Deaktiviert SQL-Logs in der Produktion
+    pool: {
+      max: 5, // Maximale Verbindungen
+      min: 0, // Minimale Verbindungen
+      acquire: 30000, // Maximale Zeit (ms), um eine Verbindung zu erhalten
+      idle: 10000, // Maximale Zeit (ms), bevor eine Verbindung geschlossen wird
+    },
   },
 };

@@ -1,28 +1,26 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "Backend service for the Animal Network application using Express.js, Sequelize, and PostgreSQL.",
   "scripts": {
     "start": "node src/server.js",
-    "test:local": "export NODE_ENV=test DB_DIALECT=postgres DB_HOST=localhost DB_DATABASE=postgres DB_USER=postgres DB_PASSWORD=postgres DB_PORT=5431 INTEGRATION_TEST_HOST_URL=http://localhost:3002 TZ=utc && npm run test:local:migration && mocha spec --recursive --timeout 10000 --exit",
-    "sequelize": "sequelize --options-path=database/options.js",
-    "test:local:migration": "npm run sequelize db:migrate:undo:all && npm run sequelize db:migrate && npm run sequelize db:seed:all",
+    "dev": "nodemon src/server.js",
+    "test": "cross-env NODE_ENV=test mocha spec --recursive --timeout 10000 --exit",
     "lint": "eslint .",
-    "dev": "nodemon src/server.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "eslint": "^8.42.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "nodemon": "^2.0.22"
+    "migrate": "npx sequelize-cli db:migrate --config C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\config\\config.js --migrations-path C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\migrations",
+    "seed": "npx sequelize-cli db:seed:all --config C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\config\\config.js --seeders-path C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\seeders",
+    "reset": "npx sequelize-cli db:migrate:undo:all --config C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\config\\config.js --migrations-path C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\migrations && npx sequelize-cli db:migrate --config C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\config\\config.js --migrations-path C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\migrations && npx sequelize-cli db:seed:all --config C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\config\\config.js --seeders-path C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\seeders",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo --config C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\config\\config.js --migrations-path C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\migrations",
+    "migrate:undo:all": "npx sequelize-cli db:migrate:undo:all --config C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\config\\config.js --migrations-path C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\migrations",
+    "seed:undo:all": "npx sequelize-cli db:seed:undo:all --config C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\config\\config.js --seeders-path C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\seeders",
+    "migration:generate": "npx sequelize-cli migration:generate --migrations-path C:\\Projekte\\AnimalNetwork\\AnimalNetworkWebsite\\backend\\database\\migrations --name"
   },
   "dependencies": {
     "chai": "^4.3.7",
     "config": "^3.3.9",
-    "dotenv": "^16.1.4",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
     "express": "^4.18.2",
     "mocha": "^10.2.0",
     "path": "^0.12.7",
@@ -30,5 +28,22 @@
     "sequelize": "^6.32.0",
     "sequelize-cli": "^6.6.1",
     "supertest": "^6.3.3"
-  }
+  },
+  "devDependencies": {
+    "eslint": "^8.42.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "express",
+    "sequelize",
+    "postgresql",
+    "backend"
+  ],
+  "author": "Your Name",
+  "license": "ISC"
 }
