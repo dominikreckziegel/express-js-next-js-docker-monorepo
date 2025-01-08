@@ -39,6 +39,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "punycode": "^2.3.1"
   }
 }

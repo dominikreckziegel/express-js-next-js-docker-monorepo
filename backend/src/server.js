@@ -1,20 +1,20 @@
-const path = require('path');
-const app = require(path.resolve('src/app'));
-const routes = require(path.resolve('src/routes'));
-const configuration = require(path.resolve('src/config')); // Direkter Import der Konfiguration
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const routes = require('./routes/index'); // Importiere die Haupt-Routen-Datei
 
-console.log(`Running in ${process.env.NODE_ENV || 'development'} mode.`);
+const app = express();
 
-// Registriere die Routen als Middleware
-app.use(routes);
+// Middleware
+app.use(cors()); // Erlaubt Cross-Origin-Anfragen vom Frontend
+app.use(bodyParser.json()); // Zum Parsen von JSON-Daten
+app.use(bodyParser.urlencoded({ extended: true })); // Zum Parsen von URL-encoded-Daten
 
-// Fehlerbehandlungs-Middleware
-app.use((err, req, res, next) => {
-  console.error('Error:', err);
-  res.status(500).json({ message: 'Internal Server Error' });
-});
+// Routen
+app.use('/', routes);
 
 // Server starten
-app.listen(configuration.server.port, () => {
-  console.log(`Server is running on port ${configuration.server.port}`);
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server läuft auf http://localhost:${PORT}`);
 });
