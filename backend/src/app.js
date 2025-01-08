@@ -2,6 +2,9 @@ const express = require('express');
 
 const app = express();
 
+// JSON-Parser-Middleware
 app.use(express.json());
 
-module.exports = { app };
+// Middleware-Registrierung oder weitere Konfiguration hier...
+
+module.exports = app;
